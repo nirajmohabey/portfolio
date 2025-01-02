@@ -36,7 +36,7 @@ export const NAVIGATION_LINKS = [
 ];
 
 export const PROFILE = {
-  name: "Niraj Mohaebey",
+  name: "Niraj Mohabey",
   role: "Data Scientist | Machine Learning Enthusiast",
   subheading:
     "I have a strong foundation in data science and software engineering, with hands-on experience in machine learning, data analysis, and web development. I excel at building innovative solutions like predictive models, dashboards, and interactive tools. My focus is on applying technology to solve real-world challenges in dynamic and collaborative environments.",
