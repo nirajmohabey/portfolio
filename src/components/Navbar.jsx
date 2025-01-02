@@ -13,7 +13,7 @@ const Navbar = () => {
     e.preventDefault();
     const targetElement = document.querySelector(href);
     if (targetElement) {
-      const offset = -50; // Adjusted offset for smaller navbar
+      const offset = -50; // Adjusted offset for navbar height
       const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY + offset;
 
@@ -30,58 +30,53 @@ const Navbar = () => {
       <nav className="fixed left-0 right-0 z-50 lg:top-4">
         {/* Desktop Menu */}
         <div
-          className="mx-auto hidden max-w-md items-center justify-center
-            rounded-full border border-white/30 py-1 px-4 backdrop-blur-lg lg:flex"
+          className="mx-auto hidden max-w-lg items-center justify-between
+            rounded-full border border-white/30 py-2 px-6 backdrop-blur-lg lg:flex"
         >
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <a href="/">
-                <span className="uppercase font-bold text-base">
-                  Niraj Mohabey
-                </span>
-              </a>
-            </div>
-            <div>
-              <ul className="flex items-center gap-3">
-                {NAVIGATION_LINKS.map((item, index) => (
-                  <li key={index}>
-                    <a
-                      className="hover:text-stone-300 text-sm"
-                      href={item.href}
-                      onClick={(e) => handleLinkClick(e, item.href)}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          {/* Navbar Title */}
+          <a href="/" className="text-base font-bold uppercase">
+            Niraj Mohabey
+          </a>
+          {/* Navbar Links */}
+          <ul className="flex items-center gap-6">
+            {NAVIGATION_LINKS.map((item, index) => (
+              <li key={index}>
+                <a
+                  className="hover:text-stone-300 text-sm"
+                  href={item.href}
+                  onClick={(e) => handleLinkClick(e, item.href)}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
         {/* Mobile Menu */}
-        <div className="py-1 px-3 backdrop-blur-md lg:hidden">
+        <div className="py-2 px-3 backdrop-blur-md lg:hidden">
           <div className="flex items-center justify-between">
-            <div>
-              <a href="#">
-                <span className="pl-2 uppercase text-base">Niraj Mohabey</span>
-              </a>
-            </div>
-            <div className="flex items-center">
-              <button
-                className="focus:outline-none lg:hidden"
-                onClick={toggleMobileMenu}
-                aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
-              >
-                {isMobileMenuOpen ? (
-                  <RiCloseLine className="m-1 h-6 w-6" />
-                ) : (
-                  <RiMenu3Line className="m-1 h-6 w-6" />
-                )}
-              </button>
-            </div>
+            {/* Navbar Title */}
+            <a href="#">
+              <span className="uppercase text-base font-bold">
+                Niraj Mohabey
+              </span>
+            </a>
+            {/* Mobile Menu Toggle */}
+            <button
+              className="focus:outline-none"
+              onClick={toggleMobileMenu}
+              aria-label={isMobileMenuOpen ? "Close Menu" : "Open Menu"}
+            >
+              {isMobileMenuOpen ? (
+                <RiCloseLine className="h-6 w-6" />
+              ) : (
+                <RiMenu3Line className="h-6 w-6" />
+              )}
+            </button>
           </div>
+          {/* Mobile Menu Links */}
           {isMobileMenuOpen && (
-            <ul className="my-3 ml-4 flex flex-col gap-4 backdrop-blur-md">
+            <ul className="my-3 flex flex-col gap-4">
               {NAVIGATION_LINKS.map((item, index) => (
                 <li key={index}>
                   <a
