@@ -86,7 +86,7 @@ export const PROJECTS = [
       "Guided the creation of a Python plagiarism detection system using advanced NLP techniques, LCS, and cosine similarity algorithms by improving detection accuracy by 20%.",
     techStack: ["Python", "Machine Learning", "SQL", "NLP", "HTML", "CSS"],
     imgSrc: project5,
-    link: "https://example-taskapp.com",
+    link: "https://github.com/nirajmohabey/Plagiarism_Detection",
   },
   {
     id: 6,
@@ -95,7 +95,7 @@ export const PROJECTS = [
       "Executed a Python project using Pandas and OpenCV to detect colors in images and live webcam feeds, achieving a high accuracy rate of 95%. Designed a user-friendly interface that allows real-time color identification and RGB value display, enhancing the project's practical applications in design and digital imaging fields by 35%.",
     techStack: ["Python", "Machine Learning", "SQL", "HTML", "CSS"],
     imgSrc: project6,
-    link: "https://example-learningplatform.com",
+    link: "https://github.com/nirajmohabey/Color_Detection",
   },
 ];
 
