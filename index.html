@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Niraj Mohabey • Portfolio</title>
+  <meta name="description" content="Personal portfolio website – projects, experience, and contact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f17; --panel:#101625; --muted:#9aa4b2; --text:#e6ebf2; --brand:#6ee7ff; --brand-2:#a78bfa; --accent:#22d3ee;
+      --ring: 0 0 0 3px rgba(34,211,238,.25);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Segoe UI Emoji";
+      background:radial-gradient(1200px 800px at 80% -10%, rgba(103,232,249,.08), transparent 60%),
+                 radial-gradient(800px 600px at 10% 10%, rgba(167,139,250,.08), transparent 60%),
+                 var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    .container{width:min(1100px, 92%); margin-inline:auto}
+
+    /* Header */
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px); background:rgba(11,15,23,.6); border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{font-weight:800; letter-spacing:.3px}
+    .brand b{background:linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .nav a{opacity:.9}
+    .nav ul{display:flex; gap:20px; list-style:none; margin:0; padding:0}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:10px; background:linear-gradient(90deg, rgba(34,211,238,.12), rgba(167,139,250,.12)); border:1px solid rgba(255,255,255,.08)}
+    .btn:hover{box-shadow:var(--ring)}
+
+    /* Hero */
+    .hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:36px; align-items:center; padding:64px 0}
+    .badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid rgba(255,255,255,.08); border-radius:999px; color:var(--muted)}
+    .title{font-size:clamp(34px, 4vw, 56px); line-height:1.1; margin:10px 0 12px}
+    .title .gradient{background:linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
+    .lead{color:var(--muted); font-size:18px}
+    .hero-cta{display:flex; gap:12px; margin-top:22px}
+    .statbar{display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:24px}
+    .stat{padding:14px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:12px; text-align:center}
+    .stat b{font-size:22px; display:block}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.07); border-radius:var(--radius); padding:18px}
+
+    .pfp{position:relative; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.08)}
+    .pfp::before{content:""; position:absolute; inset:-1px; background:conic-gradient(from 180deg, rgba(34,211,238,.3), rgba(167,139,250,.3), transparent 40%); filter:blur(30px); opacity:.5}
+    .pfp img{position:relative; z-index:1}
+
+    /* Sections */
+    section{padding:54px 0}
+    .section-head{display:flex; align-items:end; justify-content:space-between; margin-bottom:18px}
+    .h2{font-size:28px}
+    .muted{color:var(--muted)}
+
+    /* About */
+    .about-grid{display:grid; grid-template-columns: 1fr 1fr; gap:18px}
+
+    /* Skills */
+    .skills{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
+    .skill{padding:14px; border-radius:12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06)}
+    .bar{height:8px; background:#111827; border-radius:999px; overflow:hidden; margin-top:8px}
+    .bar>span{display:block; height:100%; background:linear-gradient(90deg, var(--brand), var(--brand-2))}
+
+    /* Projects */
+    .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:16px}
+    .proj{position:relative; overflow:hidden; border-radius:14px; border:1px solid rgba(255,255,255,.08)}
+    .proj img{aspect-ratio: 16/15; width:100%; object-fit:cover; filter:saturate(1.05)}
+    .proj .meta{position:absolute; inset:auto 0 0 0; padding:14px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.6) 50%, rgba(0,0,0,.85));}
+    .chip{display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(34,211,238,.15); border:1px solid rgba(34,211,238,.25); margin-right:6px}
+
+    /* Timeline */
+    .timeline{position:relative; margin-top:4px}
+    .timeline::before{content:""; position:absolute; left:10px; top:0; bottom:0; width:2px; background:rgba(255,255,255,.08)}
+    .tl-item{position:relative; padding-left:34px; padding-bottom:16px}
+    .dot{position:absolute; left:2px; top:4px; width:16px; height:16px; border-radius:50%; background:linear-gradient(90deg, var(--brand), var(--brand-2)); box-shadow:0 0 0 4px rgba(34,211,238,.12)}
+
+    /* Contact */
+    form{display:grid; gap:10px}
+    input, textarea{background:#0b1020; border:1px solid rgba(255,255,255,.08); color:var(--text); padding:12px 14px; border-radius:10px}
+    input:focus, textarea:focus{outline:none; box-shadow:var(--ring); border-color:rgba(34,211,238,.4)}
+    textarea{min-height:120px; resize:vertical}
+
+    /* Footer */
+    footer{padding:32px 0 50px; color:var(--muted)}
+
+    /* Utilities */
+    .hide{display:none}
+    .center{display:flex; align-items:center; justify-content:center}
+    .row{display:flex; gap:10px; flex-wrap:wrap}
+    .tag{padding:5px 10px; border:1px solid rgba(255,255,255,.1); border-radius:999px; color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .hero{grid-template-columns:1fr; padding:40px 0}
+      .grid{grid-template-columns:1fr 1fr}
+      .about-grid, .skills{grid-template-columns:1fr}
+    }
+    @media (max-width: 640px){
+      .grid{grid-template-columns:1fr}
+      .nav ul{display:none}
+    }
+
+    /* Animations */
+    .float{animation:float 6s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+    .fade-up{opacity:0; transform:translateY(10px); transition:.6s ease}
+    .fade-up.show{opacity:1; transform:none}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">&lt; <b>Niraj&nbsp;Mohabey</b> /&gt;</div>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a class="btn" href="#contact" aria-label="Hire Me">✨ Hire Me</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <span class="badge">👋 Hi, I’m <strong>Niraj&nbsp;Mohabey</strong></span>
+        <h1 class="title">Aspiring Data Professional<br>
+            <span class="gradient" id="type">with ETL Pipelines &amp; Dashboards</span>
+            </h1>
+        <p class="lead">M.S. in Data Science @ WPI (Dec 2025). I design data pipelines, build ML systems (LLMs, RAG, NLP), and create dashboards that drive business impact.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn" href="assets/Niraj_CV.pdf" download>⬇️ Download Résumé</a>
+        </div>
+        <div class="statbar">
+          <div class="stat card"><b>15+</b><span class="muted">Projects</span></div>
+          <div class="stat card"><b>Data Science</b><span class="muted">Focus Area</span></div>
+        </div><br>
+          <div class="stat card"><b>2 yrs</b><span class="muted">Hands‑on ML</span></div>
+        </div>
+      </div>
+      <div class="pfp float">
+        <!-- Replace with your own image -->
+        <img src="profile.jpg" alt="Niraj working at a desk" />
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-head">
+        <h2 class="h2">About</h2>
+        <span class="muted">Who I am & what I do</span>
+      </div>
+      <div class="about-grid">
+        <div class="card fade-up">
+          <p>I turn messy data into clear decisions. I work end‑to‑end: <b>ingest → ETL/ELT → feature store → model → API → BI</b>. Tooling: <b>Python</b>, <b>SQL</b>, <b>PyTorch</b>, <b>Airflow</b>, <b>AWS</b>, <b>Grafana/Tableau</b>.</p>
+          <div class="row" style="margin-top:10px">
+            <span class="tag">🧠 LLMs/RAG</span><span class="tag">🗄️ Data Eng</span><span class="tag">🧰 MLOps</span><span class="tag">📊 BI</span>
+          </div>
+        </div>
+        <div class="card fade-up">
+          <ul>
+            <li>🎯 Current: LLM apps, retrieval, prompt eval</li>
+            <li>🚀 Strength: shipping reliable, observable systems</li>
+            <li>🏫 Education: WPI — M.S. Data Science (Dec 2025)</li>
+          </ul>
+        </div>
+      </div>
+        </div>
+        <div class="card fade-up">
+          <ul>
+            <li>🎯 Focus: Data pipelines, fraud detection, churn analytics</li>
+            <li>🚀 Strength: end-to-end systems, from raw data to insights</li>
+            <li>❤️ Philosophy: simple, observable, maintainable</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-head">
+        <h2 class="h2">Skills</h2>
+        <span class="muted">What I use daily</span>
+      </div>
+      <div class="skills">
+        <div class="skill"><b>Python</b><div class="bar"><span style="width:92%"></span></div></div>
+        <div class="skill"><b>SQL (PostgreSQL)</b><div class="bar"><span style="width:88%"></span></div></div>
+        <div class="skill"><b>PyTorch / scikit‑learn</b><div class="bar"><span style="width:82%"></span></div></div>
+        <div class="skill"><b>AWS (S3, Lambda)</b><div class="bar"><span style="width:76%"></span></div></div>
+        <div class="skill"><b>Docker / GItHub</b><div class="bar"><span style="width:72%"></span></div></div>
+        <div class="skill"><b>Tableau / Grafana</b><div class="bar"><span style="width:78%"></span></div></div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-head">
+        <h2 class="h2">Projects</h2>
+        <span class="muted">Selected work</span>
+      </div>
+      <div class="grid">
+        <article class="proj fade-up">
+          <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=1200&auto=format&fit=crop" alt="BigDocBot"/>
+          <div class="meta">
+            <div class="row" style="margin-bottom:8px">
+              <span class="chip">Python</span><span class="chip">Streamlit</span><span class="chip">Model Optimization</span>
+            </div>
+            <h3>BigDocBot – Code Documentation Tool</h3>
+            <p class="muted">Streamlit app that parses GitHub repos and auto‑generates summaries, docstrings, and code quality reports for Python/JS. Includes batching, AMP, 8‑bit quantization, and PDF export.</p>
+            <a class="tag" href="https://github.com/nirajmohabey/Big-Doc_Bot" target="_blank" rel="noopener">GitHub Repo</a>
+          </div>
+        </article>
+
+        <article class="proj fade-up">
+          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1200&auto=format&fit=crop" alt="Business Process Optimization"/>
+          <div class="meta">
+            <div class="row" style="margin-bottom:8px">
+              <span class="chip">Python</span><span class="chip">Flask</span><span class="chip">Tableau</span>
+            </div>
+            <h3>AI‑Enhanced Business Process Optimization</h3>
+            <p class="muted">Analyzed workflows to identify bottlenecks (20% efficiency gain), built REST APIs for real‑time data, and delivered interactive KPI dashboards to reduce decision time by 30%.</p>
+            <a class="tag" href="https://github.com/nirajmohabey/AI-Enhanced-Business-Process-Optimization" target="_blank" rel="noopener">GitHub Repo</a>
+          </div>
+        </article>
+
+        <article class="proj fade-up">
+          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1200&auto=format&fit=crop" alt="Fraud network"/>
+          <div class="meta">
+            <div class="row" style="margin-bottom:8px">
+              <span class="chip">Scikit‑learn</span><span class="chip">LogReg</span><span class="chip">RandomForest</span>
+            </div>
+            <h3>Credit Risk Classification Model</h3>
+            <p class="muted">Predicted approvals and defaults on 10K+ loans with engineered features. Trained Logistic Regression and Random Forest models via grid search, boosting recall and reducing false negatives for better credit risk assessment.</p>
+            <a class="tag" href="https://github.com/nirajmohabey/Credit-Risk-Classification" target="_blank" rel="noopener">GitHub Repo</a>          
+          </div>
+        </article>
+
+        <article class="proj fade-up">
+          <img src="https://images.unsplash.com/photo-1592496001020-6f3f73fca92d?q=80&w=1200&auto=format&fit=crop" alt="StockSensei"/>
+          <div class="meta">
+          <div class="row" style="margin-bottom:8px">
+          <span class="chip">Time Series</span><span class="chip">ARIMA/SARIMA</span><span class="chip">Prophet</span>
+          </div>
+          <h3>StockSensei – Stock Forecasting</h3>
+          <p class="muted">Forecasted short‑term and long‑term stock price trends using ARIMA, SARIMA, and Prophet. Stored predictions in PostgreSQL and created a Tableau dashboard for interactive visualization, scenario comparisons, and performance insights.</p>
+          <a class="tag" href="https://github.com/nirajmohabey/Amazon-Sales-Analysis" target="_blank" rel="noopener">GitHub Repo</a>
+          </div>
+          </article>
+
+          <article class="proj fade-up">
+            <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1200&auto=format&fit=crop" alt="Amazon Sales Dashboard"/>
+            <div class="meta">
+            <div class="row" style="margin-bottom:8px">
+            <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Tableau</span>
+            </div>
+            <h3>Amazon Sales Data Analysis & Dashboard</h3>
+            <p class="muted">Performed EDA on 50K+ Amazon transactions to identify top products, revenue regions, and seasonal trends. Built a Tableau dashboard that streamlined reporting and boosted efficiency by 25%.</p>
+            <a class="tag" href="https://github.com/nirajmohabey/Amazon-Sales-Analysis" target="_blank" rel="noopener">GitHub Repo</a>
+            </div>
+            </article>
+
+            <article class="proj fade-up">
+              <img src="https://images.unsplash.com/photo-1550439062-609e1531270e?q=80&w=1200&auto=format&fit=crop" alt="Plagiarism Detection"/>
+              <div class="meta">
+              <div class="row" style="margin-bottom:8px">
+              <span class="chip">Python</span><span class="chip">NLP</span><span class="chip">Cosine Similarity</span>
+              </div>
+              <h3>Plagiarism Detection Website</h3>
+              <p class="muted">Built a plagiarism detection system combining preprocessing, LCS, and cosine similarity. Supported CLI and web workflows with thresholds, batch analysis for documents, and detailed reports to ensure academic integrity.</p>
+              <a class="tag" href="https://github.com/nirajmohabey/Plagiarism_Detection" target="_blank" rel="noopener">GitHub Repo</a>
+              </div>
+              </article>
+
+              <article class="proj fade-up">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" alt="Customer Segmentation"/>
+                <div class="meta">
+                <div class="row" style="margin-bottom:8px">
+                <span class="chip">Unsupervised</span><span class="chip">K‑Means</span><span class="chip">DBSCAN</span>
+                </div>
+                <h3>Customer Segmentation (Unsupervised ML)</h3>
+                <p class="muted">Applied 5 clustering algorithms with Elbow & Silhouette to discover actionable segments on 10K+ diverse customers; delivered clear visual reports and insights for precise marketing targeting.</p>
+                <a class="tag" href="https://github.com/nirajmohabey/Customer-Segmentation-Using-Clustering" target="_blank" rel="noopener">GitHub Repo</a>
+                </div>
+                </article>
+
+                <article class="proj fade-up">
+                  <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Color Detection"/>
+                  <div class="meta">
+                  <div class="row" style="margin-bottom:8px">
+                  <span class="chip">OpenCV</span><span class="chip">Pandas</span><span class="chip">CV</span>
+                  </div>
+                  <h3>Color Detection</h3>
+                  <p class="muted">Implemented real‑time color detection from images and webcam streams using OpenCV. Analyzed distributions with Pandas, detecting dominant hues, palette extraction, and practical use in image processing.</p>
+                  <a class="tag" href="https://github.com/nirajmohabey/Color_Detection" target="_blank" rel="noopener">GitHub Repo</a>
+                  </div>
+                  </article>
+
+                  <!-- <article class="proj fade-up">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop" alt="ChatBot"/>
+                    <div class="meta">
+                    <div class="row" style="margin-bottom:8px">
+                    <span class="chip">Python</span><span class="chip">NLTK</span><span class="chip">Keras</span>
+                    </div>
+                    <h3>ChatBot</h3>
+                    <p class="muted">Developed a Python ChatBot combining rule‑based logic with ML intent handling using NLTK and Keras. Implemented customizable flows for user interactions, trained on FAQs, integrated DBMS for data persistence, and delivered context‑aware responses.</p>
+                    <a class="tag" href="https://github.com/nirajmohabey/InternshipStudio_Project" target="_blank" rel="noopener">GitHub Repo</a>
+                    </div>
+                    </article> -->
+
+                    <article class="proj fade-up">
+                      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" alt="Tripadvisor Review Classification"/>
+                      <div class="meta">
+                      <div class="row" style="margin-bottom:8px">
+                      <span class="chip">NLP</span><span class="chip">Sentiment</span><span class="chip">Python</span>
+                      </div>
+                      <h3>Tripadvisor Review Classification</h3>
+                      <p class="muted">Scraped Tripadvisor hotel reviews to classify sentiment and highlight amenities. Built Python pipelines with DBMS support to extract insights, generate ratings, and surface highlights for travelers and businesses.</p>
+                      <a class="tag" href="https://github.com/nirajmohabey/Tripadvisor_Review_Classification" target="_blank" rel="noopener">GitHub Repo</a>
+                      </div>
+                      </article>
+
+                      <article class="proj fade-up">
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop" alt="Salesman Marketing Prediction"/>
+                        <div class="meta">
+                        <div class="row" style="margin-bottom:8px">
+                        <span class="chip">Python</span><span class="chip">Visualization</span><span class="chip">Analytics</span>
+                        </div>
+                        <h3>Salesman Marketing Prediction</h3>
+                        <p class="muted">Scraped Tripadvisor hotel reviews to classify sentiment and highlight amenities. Built Python pipelines with DBMS support to extract insights, generate ratings, and surface highlights for travelers and businesses.</p>
+                        <a class="tag" href="https://github.com/nirajmohabey/Marketing_Prediction" target="_blank" rel="noopener">GitHub Repo</a>
+                        </div>
+                        </article>
+
+                        <article class="proj fade-up">
+                          <img src="https://images.unsplash.com/photo-1565514158740-064f34bd6cfd?q=80&w=1200&auto=format&fit=crop" alt="Bank Personal Loan Modelling"/>
+                          <div class="meta">
+                          <div class="row" style="margin-bottom:8px">
+                          <span class="chip">Python</span><span class="chip">ML</span><span class="chip">Excel</span>
+                          </div>
+                          <h3>Bank Personal Loan Modelling</h3>
+                          <p class="muted">Identified high‑propensity customers for personal loans using historical behavior, demographic attributes, and past campaign performance data to improve targeting accuracy, efficiency, and overall ROI.</p>
+                          <a class="tag" href="https://github.com/nirajmohabey/InternshipStudio_Project" target="_blank" rel="noopener">GitHub Repo</a>
+                          </div>
+                          </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="section-head">
+        <h2 class="h2">Experience</h2>
+        <span class="muted">Timeline</span>
+      </div>
+      <div class="timeline">
+        <div class="tl-item fade-up">
+          <span class="dot"></span>
+          <h3>Data Science Intern • Mitsubishi UFG
+          </h3>
+          <p class="muted">Jan 2025 – May 2025</p>
+          <p>Devised a fixed-income ETF pricing engine using Python, SQL, and Streamlit, modeling 5,000+ bonds with sub-0.5% deviation from Bloomberg YAS, enhancing trade execution confidence for institutional investors. Visualized 1,000+ ISIN-level yield shock curves in a real-time Streamlit dashboard, enabling dynamic scenario modeling for interest rate risk analysis across diverse portfolios for strategic investment planning. Collaborated with quant analysts to deploy production-ready dashboards with real-time pricing logic, leveraging problem-solving skills to streamline portfolio risk decisions and boost trader efficiency in high-frequency trading environments.</p>
+        </div>
+        <div class="tl-item fade-up">
+          <span class="dot"></span>
+          <h3>Data Science Intern • SUNRISE GROUP USA LLC</h3>
+          <p class="muted">Jun 2022 – Nov 2023</p>
+          <p>Modeled a loan status prediction system using SVM in Python, achieving 83% accuracy through advanced feature engineering to optimize lending decisions and mitigate financial risks in banking operations. Spearheaded a Linear Regression model for medical insurance cost prediction, attaining a 0.74 R² score, and deployed Tableau and Grafana dashboards with a Streamlit interface, enhancing cross-functional team communication and data-driven strategy formulation.</p>
+        </div>
+        <div class="tl-item fade-up">
+            <span class="dot"></span>
+            <h3>Data Science Intern • Innodatatics.Inc</h3>
+            <p class="muted">Aug 2020 – Jan 2021</p>
+            <p>Built an NLP-powered sentiment analysis pipeline for TripAdvisor reviews using Python and Hugging Face, achieving 98% accuracy to deliver actionable insights for service improvements. Engineered an intrusion prediction model with scikit-learn, leveraging feature engineering and hyperparameter tuning to enhance cybersecurity for enterprise networks, strengthening real-time threat detection capabilities through rigorous data analysis.</p>
+          </div>
+          <div class="tl-item fade-up">
+            <span class="dot"></span>
+            <h3>Machine Learning Intern • INTERNSHIP STUDIO</h3>
+            <p class="muted">Jun 2020 – Aug 2020</p>
+            <p>Developed a predictive analytics model using Python and scikit-learn to forecast customer behavior, achieving 85% accuracy on a 5,000-record dataset, driving data-informed marketing strategies. Designed a Streamlit dashboard integrated with PostgreSQL to visualize key performance metrics, improving stakeholder decision-making efficiency by 30% through clear, interactive data insights.</p>
+          </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-head">
+        <h2 class="h2">Contact</h2>
+        <span class="muted">Let’s build something</span>
+      </div>
+      <div class="card">
+        <form id="contactForm" onsubmit="return false;">
+          <div class="row">
+            <input name="name" placeholder="Your name" required>
+            <input name="email" type="email" placeholder="Email" required>
+          </div>
+          <textarea name="message" placeholder="Message" required></textarea>
+          <button class="btn" id="sendBtn">Send Message</button>
+          <p class="muted" id="msg" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div class="center" style="gap:10px; flex-direction:column">
+      <div>
+        <a class="tag" href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        <a class="tag" href="https://www.linkedin.com/in/nirajmohabey/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="tag" href="mailto:nmohabey31@gmail.com">Email</a>
+      </div>
+      <small>© <span id="year"></span> Niraj • Made with ♥</small>
+    </div>
+  </footer>
+
+  <script>
+    // Typewriter effect
+    const roles = ["with Data Pipelines", "with ML Models", "with BI Dashboards"];
+    let idx = 0, pos = 0, dir = 1; // dir: 1 typing, -1 deleting
+    const el = document.getElementById('type');
+    function tick(){
+      const full = roles[idx];
+      pos += dir;
+      el.textContent = full.slice(0, pos);
+      if(pos === full.length){ dir = -1; setTimeout(tick, 1200); return; }
+      if(pos === 0){ dir = 1; idx = (idx + 1) % roles.length; }
+      setTimeout(tick, dir>0 ? 80 : 40);
+    }
+    tick();
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); })
+    }, { threshold: .15 });
+    document.querySelectorAll('.fade-up').forEach(n=> io.observe(n));
+
+    // Contact form (demo)
+    const form = document.getElementById('contactForm');
+    const msg = document.getElementById('msg');
+    document.getElementById('sendBtn').addEventListener('click', ()=>{
+      const data = Object.fromEntries(new FormData(form).entries());
+      if(!data.name || !data.email || !data.message){
+        msg.textContent = 'Please fill all fields.'; return;
+      }
+      // Demo only — replace with your backend/API
+      msg.textContent = 'Thanks, ' + data.name + '! I\'ll get back to you soon.';
+      form.reset();
+    });
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth anchor scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(id.length>1){ e.preventDefault(); document.querySelector(id).scrollIntoView({behavior:'smooth'}); }
+      });
+    });
+  </script>
+</body>
+</html>
