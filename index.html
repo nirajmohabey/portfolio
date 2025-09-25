@@ -82,7 +82,7 @@
     .container{width:min(1100px, 92%); margin-inline:auto}
 
     /* Header */
-    header{position:fixed; top:0; left:0; right:0; z-index:50; backdrop-filter:saturate(180%) blur(10px); background:rgba(11,15,23,.6); border-bottom:1px solid rgba(255,255,255,.06)}
+    header{position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(11,15,23,.95); border-bottom:1px solid rgba(255,255,255,.06); will-change:transform}
     .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
     .brand{font-weight:800; letter-spacing:.3px}
     .brand b{background:linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
@@ -163,9 +163,9 @@
     }
 
     /* Animations */
-    .float{animation:float 6s ease-in-out infinite}
+    .float{animation:float 6s ease-in-out infinite; will-change:transform}
     @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-    .fade-up{opacity:0; transform:translateY(10px); transition:.6s ease}
+    .fade-up{opacity:0; transform:translateY(10px); transition:opacity .4s ease, transform .4s ease; will-change:opacity, transform}
     .fade-up.show{opacity:1; transform:none}
   </style>
   
@@ -536,7 +536,7 @@
         <a class="tag" href="https://www.linkedin.com/in/nirajmohabey/" target="_blank" rel="noopener">LinkedIn</a>
         <a class="tag" href="mailto:nmohabey31@gmail.com">Email</a>
       </div>
-      <small>© <span id="year"></span> Niraj • Made with ♥</small>
+      <small>© <span id="year"></span> Niraj</small>
     </div>
   </footer>
 
@@ -557,8 +557,13 @@
 
     // Scroll reveal
     const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); })
-    }, { threshold: .15 });
+      entries.forEach(e=>{ 
+        if(e.isIntersecting) {
+          e.target.classList.add('show');
+          io.unobserve(e.target); // Stop observing once revealed
+        }
+      })
+    }, { threshold: .1, rootMargin: '50px' });
     document.querySelectorAll('.fade-up').forEach(n=> io.observe(n));
 
     // Contact form (demo)
