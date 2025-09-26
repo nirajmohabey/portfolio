@@ -103,9 +103,9 @@
     .stat b{font-size:22px; display:block}
     .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.07); border-radius:var(--radius); padding:18px}
 
-    .pfp{position:relative; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.08)}
+    .pfp{position:relative; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.08); transform:translateZ(0)}
     .pfp::before{content:""; position:absolute; inset:-1px; background:conic-gradient(from 180deg, rgba(34,211,238,.3), rgba(167,139,250,.3), transparent 40%); filter:blur(30px); opacity:.5}
-    .pfp img{position:relative; z-index:1}
+    .pfp img{position:relative; z-index:1; display:block}
 
     /* Sections */
     section{padding:54px 0}
@@ -163,8 +163,8 @@
     }
 
     /* Animations */
-    .float{animation:float 6s ease-in-out infinite; will-change:transform}
-    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+    .float{animation:float 6s ease-in-out infinite; will-change:transform; transform:translateZ(0)}
+    @keyframes float{0%{transform:translateY(0) translateZ(0)}50%{transform:translateY(-8px) translateZ(0)}100%{transform:translateY(0) translateZ(0)}}
     .fade-up{opacity:0; transform:translateY(10px); transition:opacity .4s ease, transform .4s ease; will-change:opacity, transform}
     .fade-up.show{opacity:1; transform:none}
   </style>
