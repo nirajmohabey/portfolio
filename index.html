@@ -542,7 +542,7 @@
       <div class="card">
         <form id="contactForm" action="https://formsubmit.co/nmohabey31@gmail.com" method="POST">
           <input type="hidden" name="_subject" value="New Portfolio Contact">
-          <input type="hidden" name="_next" value="https://portfolio-niraj-mohabeys-projects.vercel.app/?success=true">
+          <input type="hidden" name="_next" value="https://portfolio-niraj-mohabeys-projects.vercel.app/?success=true&name=" id="nextUrl">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
           <div class="row">
@@ -562,7 +562,7 @@
       <div>
         <a class="tag" href="https://github.com/nirajmohabey?tab=repositories" target="_blank" rel="noopener">GitHub</a>
         <a class="tag" href="https://www.linkedin.com/in/nirajmohabey/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="tag" href="mailto:nmohabey31@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Niraj,%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.%0A%0ABest%20regards," target="_blank" rel="noopener" aria-label="Send email to Niraj Mohabey" id="emailLink">Email</a>
+        <a class="tag" href="mailto:nmohabey31@gmail.com">Email</a>
       </div>
       <small>© <span id="year"></span> Niraj</small>
     </div>
@@ -625,11 +625,13 @@
     const form = document.getElementById('contactForm');
     const msg = document.getElementById('msg');
     const sendBtn = document.getElementById('sendBtn');
+    const nextUrlInput = document.getElementById('nextUrl');
     
     // Check for success parameter in URL
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('success') === 'true') {
-      msg.textContent = 'Thank you! Your message has been sent successfully. I\'ll get back to you soon.';
+      const senderName = urlParams.get('name') || 'there';
+      msg.textContent = `Thank you ${senderName}! I'll get back to you soon.`;
       msg.style.color = '#22d3ee';
       // Clear the URL parameter
       window.history.replaceState({}, document.title, window.location.pathname);
@@ -644,11 +646,20 @@
         return;
       }
       
+      // Update the redirect URL with the sender's name
+      const baseUrl = 'https://portfolio-niraj-mohabeys-projects.vercel.app/?success=true&name=';
+      nextUrlInput.value = baseUrl + encodeURIComponent(data.name);
+      
       // Show loading state
       sendBtn.textContent = 'Sending...';
       sendBtn.disabled = true;
       msg.textContent = 'Sending your message...';
       msg.style.color = '#6ee7ff';
+      
+      // Prevent page from jumping to top by scrolling to contact section
+      setTimeout(() => {
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     });
 
     // Year
