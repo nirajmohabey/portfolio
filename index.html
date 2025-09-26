@@ -106,7 +106,7 @@
     .container{width:min(1100px, 92%); margin-inline:auto}
 
     /* Header */
-    header{position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(11,15,23,.9); border-bottom:1px solid rgba(255,255,255,.06); will-change:transform; backdrop-filter: blur(10px)}
+    header{position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(11,15,23,.95); border-bottom:1px solid rgba(255,255,255,.06); will-change:transform}
     .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
     .brand{font-weight:800; letter-spacing:.3px}
     .brand b{background:linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
@@ -189,8 +189,8 @@
     /* Animations */
     .float{animation:float 6s ease-in-out infinite; will-change:transform; transform:translateZ(0)}
     @keyframes float{0%{transform:translateY(0) translateZ(0)}50%{transform:translateY(-8px) translateZ(0)}100%{transform:translateY(0) translateZ(0)}}
-    .fade-up{opacity:0; transform:translateY(5px); transition:opacity .3s ease, transform .3s ease; will-change:opacity, transform}
-    .fade-up.show{opacity:1; transform:translateY(0)}
+    .fade-up{opacity:1; transform:none; transition:none}
+    .fade-up.show{opacity:1; transform:none}
   </style>
   
   <!-- JSON-LD Structured Data -->
@@ -577,63 +577,27 @@
     }
     tick();
 
-    // Intelligent image preloading
-    const imagePreloader = {
-      loaded: new Set(),
-      preloadImage(src) {
-        if (this.loaded.has(src)) return Promise.resolve();
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => {
-            this.loaded.add(src);
-            resolve();
-          };
-          img.onerror = reject;
-          img.src = src;
-        });
-      },
-      preloadImagesInViewport() {
-        const images = document.querySelectorAll('img[data-src]');
-        images.forEach(img => {
-          if (img.dataset.src && !this.loaded.has(img.dataset.src)) {
-            this.preloadImage(img.dataset.src).then(() => {
-              img.src = img.dataset.src;
-              img.removeAttribute('data-src');
-            });
-          }
-        });
-      }
+    // Simple image preloading
+    const preloadImages = () => {
+      const images = document.querySelectorAll('img');
+      images.forEach(img => {
+        if (img.src && !img.complete) {
+          const newImg = new Image();
+          newImg.src = img.src;
+        }
+      });
     };
 
-    // Scroll reveal - optimized for performance
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ 
-        if(e.isIntersecting) {
-          e.target.classList.add('show');
-          io.unobserve(e.target); // Stop observing once revealed
-          
-          // Preload images when section comes into view
-          imagePreloader.preloadImagesInViewport();
-        }
-      })
-    }, { threshold: .05, rootMargin: '100px' });
-    
-    // Only observe elements that are likely to be visible
-    const elementsToObserve = document.querySelectorAll('.fade-up');
-    elementsToObserve.forEach((el, index) => {
-      // Stagger the observation to reduce initial load
-      setTimeout(() => io.observe(el), index * 50);
+    // Disable scroll animations for better performance
+    document.querySelectorAll('.fade-up').forEach(el => {
+      el.classList.add('show');
     });
 
     // Preload images on idle
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(() => {
-        imagePreloader.preloadImagesInViewport();
-      });
+      requestIdleCallback(preloadImages);
     } else {
-      setTimeout(() => {
-        imagePreloader.preloadImagesInViewport();
-      }, 1000);
+      setTimeout(preloadImages, 1000);
     }
 
     // Register Service Worker for caching
