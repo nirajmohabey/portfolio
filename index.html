@@ -45,9 +45,30 @@
   <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   
+  <!-- Cache Control -->
+  <meta http-equiv="Cache-Control" content="public, max-age=31536000" />
+  <meta http-equiv="Expires" content="31536000" />
+  
   <!-- DNS Prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com" />
   <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="assets/profile.jpg" as="image" type="image/jpeg" />
+  <link rel="preload" href="assets/photo1.avif" as="image" type="image/avif" />
+  <link rel="preload" href="assets/photo2.avif" as="image" type="image/avif" />
+  <link rel="preload" href="assets/photo3.avif" as="image" type="image/avif" />
+  
+  <!-- Prefetch next section images -->
+  <link rel="prefetch" href="assets/photo5.jpg" as="image" />
+  <link rel="prefetch" href="assets/photo6.jpg" as="image" />
+  <link rel="prefetch" href="assets/photo7.jpg" as="image" />
+  <link rel="prefetch" href="assets/photo8.jpg" as="image" />
+  <link rel="prefetch" href="assets/stock.jpg" as="image" />
+  <link rel="prefetch" href="assets/trip.jpg" as="image" />
+  <link rel="prefetch" href="assets/marketing.avif" as="image" />
+  <link rel="prefetch" href="assets/bank.jpg" as="image" />
+  <link rel="prefetch" href="assets/photo10.jpg" as="image" />
   
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YH59TM4HJF"></script>
@@ -557,12 +578,43 @@
     }
     tick();
 
+    // Intelligent image preloading
+    const imagePreloader = {
+      loaded: new Set(),
+      preloadImage(src) {
+        if (this.loaded.has(src)) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            this.loaded.add(src);
+            resolve();
+          };
+          img.onerror = reject;
+          img.src = src;
+        });
+      },
+      preloadImagesInViewport() {
+        const images = document.querySelectorAll('img[data-src]');
+        images.forEach(img => {
+          if (img.dataset.src && !this.loaded.has(img.dataset.src)) {
+            this.preloadImage(img.dataset.src).then(() => {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+            });
+          }
+        });
+      }
+    };
+
     // Scroll reveal - optimized for performance
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ 
         if(e.isIntersecting) {
           e.target.classList.add('show');
           io.unobserve(e.target); // Stop observing once revealed
+          
+          // Preload images when section comes into view
+          imagePreloader.preloadImagesInViewport();
         }
       })
     }, { threshold: .05, rootMargin: '100px' });
@@ -573,6 +625,30 @@
       // Stagger the observation to reduce initial load
       setTimeout(() => io.observe(el), index * 50);
     });
+
+    // Preload images on idle
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        imagePreloader.preloadImagesInViewport();
+      });
+    } else {
+      setTimeout(() => {
+        imagePreloader.preloadImagesInViewport();
+      }, 1000);
+    }
+
+    // Register Service Worker for caching
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('SW registered: ', registration);
+          })
+          .catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
 
     // Contact form (demo)
     const form = document.getElementById('contactForm');
