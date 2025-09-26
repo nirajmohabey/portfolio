@@ -71,9 +71,12 @@
     html,body{height:100%}
     body{
       margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Segoe UI Emoji";
+      background-attachment: fixed;
       background:radial-gradient(ellipse 2000px 1500px at 20% 20%, rgba(103,232,249,.06), transparent 70%),
                  radial-gradient(ellipse 1800px 1200px at 80% 30%, rgba(167,139,250,.05), transparent 70%),
                  radial-gradient(ellipse 1600px 1000px at 50% 70%, rgba(34,211,238,.04), transparent 70%),
+                 radial-gradient(ellipse 1400px 800px at 10% 80%, rgba(103,232,249,.03), transparent 60%),
+                 radial-gradient(ellipse 1200px 600px at 90% 10%, rgba(167,139,250,.04), transparent 60%),
                  var(--bg);
       color:var(--text);
       line-height:1.6;
@@ -83,7 +86,7 @@
     .container{width:min(1100px, 92%); margin-inline:auto}
 
     /* Header */
-    header{position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(8,11,18,.95); border-bottom:1px solid rgba(255,255,255,.06); will-change:transform; backdrop-filter:blur(10px)}
+    header{position:fixed; top:0; left:0; right:0; z-index:50; background:rgba(8,11,18,.95); border-bottom:1px solid rgba(255,255,255,.06); will-change:transform}
     .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
     .brand{font-weight:800; letter-spacing:.3px}
     .brand b{background:linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent}
@@ -100,9 +103,9 @@
     .lead{color:var(--muted); font-size:18px}
     .hero-cta{display:flex; gap:12px; margin-top:22px}
     .statbar{display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:24px}
-    .stat{padding:14px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); border-radius:12px; text-align:center}
+    .stat{padding:14px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:12px; text-align:center}
     .stat b{font-size:22px; display:block}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)); border:1px solid rgba(255,255,255,.05); border-radius:var(--radius); padding:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.07); border-radius:var(--radius); padding:18px}
 
     .pfp{position:relative; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.08); transform:translateZ(0)}
     .pfp::before{content:""; position:absolute; inset:-1px; background:conic-gradient(from 180deg, rgba(34,211,238,.3), rgba(167,139,250,.3), transparent 40%); filter:blur(30px); opacity:.5}
@@ -120,13 +123,13 @@
 
     /* Skills */
     .skills{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
-    .skill{padding:14px; border-radius:12px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05)}
+    .skill{padding:14px; border-radius:12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06)}
     .bar{height:8px; background:#111827; border-radius:999px; overflow:hidden; margin-top:8px}
     .bar>span{display:block; height:100%; background:linear-gradient(90deg, var(--brand), var(--brand-2))}
 
     /* Projects */
     .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:16px}
-    .proj{position:relative; overflow:hidden; border-radius:14px; border:1px solid rgba(255,255,255,.06)}
+    .proj{position:relative; overflow:hidden; border-radius:14px; border:1px solid rgba(255,255,255,.08)}
     .proj img{aspect-ratio: 16/15; width:100%; object-fit:cover; filter:saturate(1.05)}
     .proj .meta{position:absolute; inset:auto 0 0 0; padding:14px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.6) 50%, rgba(0,0,0,.85));}
     .chip{display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(34,211,238,.15); border:1px solid rgba(34,211,238,.25); margin-right:6px}
