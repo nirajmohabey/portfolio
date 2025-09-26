@@ -124,10 +124,10 @@
     .bar>span{display:block; height:100%; background:linear-gradient(90deg, var(--brand), var(--brand-2))}
 
     /* Projects */
-    .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:16px}
-    .proj{position:relative; overflow:hidden; border-radius:14px; border:1px solid rgba(255,255,255,.08)}
-    .proj img{aspect-ratio: 16/15; width:100%; object-fit:cover; filter:saturate(1.05)}
-    .proj .meta{position:absolute; inset:auto 0 0 0; padding:14px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.6) 50%, rgba(0,0,0,.85));}
+    .grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; contain:layout style}
+    .proj{position:relative; overflow:hidden; border-radius:14px; border:1px solid rgba(255,255,255,.08); will-change:transform; transform:translateZ(0)}
+    .proj img{aspect-ratio: 16/15; width:100%; object-fit:cover; filter:saturate(1.05); will-change:transform}
+    .proj .meta{position:absolute; inset:auto 0 0 0; padding:14px; background:linear-gradient(180deg, transparent, rgba(0,0,0,.6) 50%, rgba(0,0,0,.85)); will-change:transform}
     .chip{display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px; background:rgba(34,211,238,.15); border:1px solid rgba(34,211,238,.25); margin-right:6px}
 
     /* Timeline */
@@ -165,8 +165,8 @@
     /* Animations */
     .float{animation:float 6s ease-in-out infinite; will-change:transform; transform:translateZ(0)}
     @keyframes float{0%{transform:translateY(0) translateZ(0)}50%{transform:translateY(-8px) translateZ(0)}100%{transform:translateY(0) translateZ(0)}}
-    .fade-up{opacity:0; transform:translateY(10px); transition:opacity .4s ease, transform .4s ease; will-change:opacity, transform}
-    .fade-up.show{opacity:1; transform:none}
+    .fade-up{opacity:0; transform:translateY(5px); transition:opacity .3s ease, transform .3s ease; will-change:opacity, transform}
+    .fade-up.show{opacity:1; transform:translateY(0)}
   </style>
   
   <!-- JSON-LD Structured Data -->
@@ -554,7 +554,7 @@
     }
     tick();
 
-    // Scroll reveal
+    // Scroll reveal - optimized for performance
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ 
         if(e.isIntersecting) {
@@ -562,8 +562,14 @@
           io.unobserve(e.target); // Stop observing once revealed
         }
       })
-    }, { threshold: .1, rootMargin: '50px' });
-    document.querySelectorAll('.fade-up').forEach(n=> io.observe(n));
+    }, { threshold: .05, rootMargin: '100px' });
+    
+    // Only observe elements that are likely to be visible
+    const elementsToObserve = document.querySelectorAll('.fade-up');
+    elementsToObserve.forEach((el, index) => {
+      // Stagger the observation to reduce initial load
+      setTimeout(() => io.observe(el), index * 50);
+    });
 
     // Contact form (demo)
     const form = document.getElementById('contactForm');
