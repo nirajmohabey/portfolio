@@ -1,5 +1,5 @@
 // Service Worker for Portfolio Caching
-const CACHE_NAME = 'portfolio-v1';
+const CACHE_NAME = 'portfolio-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -29,12 +29,16 @@ self.addEventListener('install', event => {
   );
 });
 
-// Fetch event - serve from cache
+// Fetch event - serve from cache with network fallback
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Return cached version or fetch from network
+        // For HTML files, always try network first
+        if (event.request.url.includes('.html') || event.request.url.endsWith('/')) {
+          return fetch(event.request).catch(() => response);
+        }
+        // For other resources, return cached version or fetch from network
         return response || fetch(event.request);
       })
   );

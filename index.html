@@ -46,8 +46,8 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   
   <!-- Cache Control -->
-  <meta http-equiv="Cache-Control" content="public, max-age=31536000" />
-  <meta http-equiv="Expires" content="31536000" />
+  <meta http-equiv="Cache-Control" content="public, max-age=3600" />
+  <meta http-equiv="Expires" content="3600" />
   
   <!-- DNS Prefetch for external resources -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -605,9 +605,11 @@
     // Register Service Worker for caching
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('/sw.js?v=2')
           .then(registration => {
             console.log('SW registered: ', registration);
+            // Force update on registration
+            registration.update();
           })
           .catch(registrationError => {
             console.log('SW registration failed: ', registrationError);
