@@ -540,13 +540,17 @@
         <span class="muted">Let’s build something</span>
       </div>
       <div class="card">
-        <form id="contactForm" onsubmit="return false;">
+        <form id="contactForm" action="https://formsubmit.co/nmohabey31@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="New Portfolio Contact">
+          <input type="hidden" name="_next" value="https://portfolio-niraj-mohabeys-projects.vercel.app/?success=true">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
           <div class="row">
             <input name="name" placeholder="Your name" required>
             <input name="email" type="email" placeholder="Email" required>
           </div>
           <textarea name="message" placeholder="Message" required></textarea>
-          <button class="btn" id="sendBtn">Send Message</button>
+          <button class="btn" type="submit" id="sendBtn">Send Message</button>
           <p class="muted" id="msg" aria-live="polite"></p>
         </form>
       </div>
@@ -558,7 +562,7 @@
       <div>
         <a class="tag" href="https://github.com/nirajmohabey?tab=repositories" target="_blank" rel="noopener">GitHub</a>
         <a class="tag" href="https://www.linkedin.com/in/nirajmohabey/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="tag" href="mailto:nmohabey31@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Niraj,%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.%0A%0ABest%20regards," target="_blank" rel="noopener" aria-label="Send email to Niraj Mohabey">Email</a>
+        <a class="tag" href="mailto:nmohabey31@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Niraj,%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.%0A%0ABest%20regards," target="_blank" rel="noopener" aria-label="Send email to Niraj Mohabey" id="emailLink">Email</a>
       </div>
       <small>© <span id="year"></span> Niraj</small>
     </div>
@@ -617,17 +621,34 @@
       });
     }
 
-    // Contact form (demo)
+    // Contact form handling
     const form = document.getElementById('contactForm');
     const msg = document.getElementById('msg');
-    document.getElementById('sendBtn').addEventListener('click', ()=>{
+    const sendBtn = document.getElementById('sendBtn');
+    
+    // Check for success parameter in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      msg.textContent = 'Thank you! Your message has been sent successfully. I\'ll get back to you soon.';
+      msg.style.color = '#22d3ee';
+      // Clear the URL parameter
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
+    form.addEventListener('submit', (e) => {
       const data = Object.fromEntries(new FormData(form).entries());
-      if(!data.name || !data.email || !data.message){
-        msg.textContent = 'Please fill all fields.'; return;
+      if (!data.name || !data.email || !data.message) {
+        e.preventDefault();
+        msg.textContent = 'Please fill all fields.';
+        msg.style.color = '#ff6b6b';
+        return;
       }
-      // Demo only — replace with your backend/API
-      msg.textContent = 'Thanks, ' + data.name + '! I\'ll get back to you soon.';
-      form.reset();
+      
+      // Show loading state
+      sendBtn.textContent = 'Sending...';
+      sendBtn.disabled = true;
+      msg.textContent = 'Sending your message...';
+      msg.style.color = '#6ee7ff';
     });
 
     // Year
@@ -641,13 +662,20 @@
       });
     });
 
-    // Email link fallback
-    document.querySelectorAll('a[href^="mailto:"]').forEach(emailLink => {
-      emailLink.addEventListener('click', (e) => {
-        // Let the default mailto behavior work first
-        // If it fails, we can add a fallback here
-        console.log('Email link clicked:', emailLink.href);
-      });
+    // Email link handling
+    document.getElementById('emailLink').addEventListener('click', (e) => {
+      console.log('Email link clicked:', e.target.href);
+      
+      // Show a tooltip or message to help users understand what will happen
+      const originalText = e.target.textContent;
+      e.target.textContent = 'Opening email client...';
+      e.target.style.color = '#6ee7ff';
+      
+      // Reset after a short delay
+      setTimeout(() => {
+        e.target.textContent = originalText;
+        e.target.style.color = '';
+      }, 2000);
     });
   </script>
 </body>
