@@ -63,7 +63,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#080b12; --panel:#0d1119; --muted:#9aa4b2; --text:#e6ebf2; --brand:#6ee7ff; --brand-2:#a78bfa; --accent:#22d3ee;
+      --bg:#0b0f17; --panel:#101625; --muted:#9aa4b2; --text:#e6ebf2; --brand:#6ee7ff; --brand-2:#a78bfa; --accent:#22d3ee;
       --ring: 0 0 0 3px rgba(34,211,238,.25);
       --radius: 16px;
     }
@@ -71,9 +71,8 @@
     html,body{height:100%}
     body{
       margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Segoe UI Emoji";
-      background:radial-gradient(ellipse 2000px 1500px at 20% 20%, rgba(103,232,249,.08), transparent 70%),
-                 radial-gradient(ellipse 1800px 1200px at 80% 30%, rgba(167,139,250,.06), transparent 70%),
-                 radial-gradient(ellipse 1600px 1000px at 50% 70%, rgba(34,211,238,.04), transparent 70%),
+      background:radial-gradient(1200px 800px at 80% -10%, rgba(103,232,249,.08), transparent 60%),
+                 radial-gradient(800px 600px at 10% 10%, rgba(167,139,250,.08), transparent 60%),
                  var(--bg);
       color:var(--text);
       line-height:1.6;
@@ -233,9 +232,7 @@
     <section class="hero">
       <div>
         <span class="badge">👋 Hi, I’m <strong>Niraj&nbsp;Mohabey</strong></span>
-        <h1 class="title">Aspiring Data Professional <span>with</span><br>
-            <span class="gradient" id="type"></span>
-            </h1>
+        <h1 class="title">Aspiring Data Professional</h1>
         <p class="lead">M.S. in Data Science @ WPI (Dec 2025). I design data pipelines, build ML systems (LLMs, RAG, NLP), and create dashboards that drive business impact.</p>
         <div class="hero-cta">
           <a class="btn" href="#projects">View Projects</a>
@@ -541,19 +538,6 @@
   </footer>
 
   <script>
-    // Typewriter effect
-    const roles = ["ETL Pipelines & Dashboards", "Data Pipelines", "ML Models", "BI Dashboards"];
-    let idx = 0, pos = 0, dir = 1; // dir: 1 typing, -1 deleting
-    const el = document.getElementById('type');
-    function tick(){
-      const full = roles[idx];
-      pos += dir;
-      el.textContent = full.slice(0, pos);
-      if(pos === full.length){ dir = -1; setTimeout(tick, 1200); return; }
-      if(pos === 0){ dir = 1; idx = (idx + 1) % roles.length; }
-      setTimeout(tick, dir>0 ? 80 : 40);
-    }
-    tick();
 
     // Scroll reveal
     const io = new IntersectionObserver((entries)=>{
