@@ -638,9 +638,10 @@
     }
     
     form.addEventListener('submit', (e) => {
+      e.preventDefault(); // Always prevent default form submission
+      
       const data = Object.fromEntries(new FormData(form).entries());
       if (!data.name || !data.email || !data.message) {
-        e.preventDefault();
         msg.textContent = 'Please fill all fields.';
         msg.style.color = '#ff6b6b';
         return;
@@ -656,10 +657,31 @@
       msg.textContent = 'Sending your message...';
       msg.style.color = '#6ee7ff';
       
-      // Prevent page from jumping to top by scrolling to contact section
-      setTimeout(() => {
-        document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      // Submit the form programmatically to FormSubmit
+      const formData = new FormData(form);
+      fetch('https://formsubmit.co/nmohabey31@gmail.com', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          // Show success message immediately
+          msg.textContent = `Thank you ${data.name}! I'll get back to you soon.`;
+          msg.style.color = '#22d3ee';
+          form.reset();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      })
+      .catch(error => {
+        msg.textContent = 'Sorry, there was an error sending your message. Please try again.';
+        msg.style.color = '#ff6b6b';
+      })
+      .finally(() => {
+        // Reset button state
+        sendBtn.textContent = 'Send Message';
+        sendBtn.disabled = false;
+      });
     });
 
     // Year
