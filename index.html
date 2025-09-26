@@ -232,7 +232,9 @@
     <section class="hero">
       <div>
         <span class="badge">👋 Hi, I’m <strong>Niraj&nbsp;Mohabey</strong></span>
-        <h1 class="title">Aspiring Data Professional with ETL Pipelines &amp; Dashboards</h1>
+        <h1 class="title">Aspiring Data Professional <span class="gradient">with</span><br>
+            <span class="gradient" id="type">ETL Pipelines &amp; Dashboards</span>
+            </h1>
         <p class="lead">M.S. in Data Science @ WPI (Dec 2025). I design data pipelines, build ML systems (LLMs, RAG, NLP), and create dashboards that drive business impact.</p>
         <div class="hero-cta">
           <a class="btn" href="#projects">View Projects</a>
@@ -538,6 +540,20 @@
   </footer>
 
   <script>
+    // Typewriter effect
+    const roles = ["Data Pipelines", "ML Models", "BI Dashboards"];
+    let idx = 0, pos = 0, dir = 1; // dir: 1 typing, -1 deleting
+    const el = document.getElementById('type');
+    function tick(){
+      const full = roles[idx];
+      pos += dir;
+      el.textContent = full.slice(0, pos);
+      if(pos === full.length){ dir = -1; setTimeout(tick, 1200); return; }
+      if(pos === 0){ dir = 1; idx = (idx + 1) % roles.length; }
+      setTimeout(tick, dir>0 ? 80 : 40);
+    }
+    tick();
+
     // Scroll reveal
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ 
