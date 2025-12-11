@@ -139,7 +139,7 @@
     .muted{color:var(--muted)}
 
     /* About */
-    .about-grid{display:grid; grid-template-columns: 1fr 1fr; gap:18px}
+    .about-grid{display:grid; grid-template-columns: 1fr 1fr; gap:18px; margin-bottom:30px}
 
     /* Skills */
     .skills{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
@@ -259,11 +259,13 @@
     <section class="hero">
       <div>
         <span class="badge">👋 Hi, I’m <strong>Niraj&nbsp;Mohabey</strong></span>
-        <h1 class="title">Aspiring Data Professional <span style="color: white;">with</span><br>
+        <h1 class="title">Data Science Professional <span style="color: white;">Building</span><br>
             <span class="gradient" id="type">Data Pipelines</span>
             </h1>
         <p class="lead">M.S. in Data Science @ WPI (Dec 2025). I design data pipelines, build ML systems (LLMs, RAG, NLP), and create dashboards that drive business impact.</p>
         <div class="hero-cta">
+          <a class="btn" href="assets/Niraj_CV.pdf" download>📄 Download Resume</a>
+          <a class="btn" href="#contact">💬 Let's Connect</a>
         </div>
         <div class="statbar">
           <div class="stat card"><b>15+</b><span class="muted">Projects</span></div>
@@ -286,27 +288,26 @@
       </div>
       <div class="about-grid">
         <div class="card fade-up">
-          <p>I turn messy data into clear decisions. I work end‑to‑end: <b>ingest → ETL/ELT → feature store → model → API → BI</b>. Tooling: <b>Python</b>, <b>SQL</b>, <b>PyTorch</b>, <b>Airflow</b>, <b>AWS</b>, <b>Grafana/Tableau</b>.</p>
+          <p>I turn messy data into clear decisions. I build end-to-end systems: <b>ingest → ETL/ELT → feature store → model → API → BI</b>.<br>
+          Tooling: <b>Python</b>, <b>SQL</b>, <b>PyTorch</b>, <b>Airflow</b>, <b>AWS</b>, <b>Grafana/Tableau</b>. I specialize in <b>LLMs/RAG</b>, <b>Data Engineering</b>, <b>MLOps</b>, and <b>BI</b> with a focus on reliability and observability.</p>
           <div class="row" style="margin-top:10px">
             <span class="tag">🧠 LLMs/RAG</span><span class="tag">🗄️ Data Eng</span><span class="tag">🧰 MLOps</span><span class="tag">📊 BI</span>
           </div>
         </div>
         <div class="card fade-up">
           <ul>
-            <li>🎯 Current: LLM apps, retrieval, prompt eval</li>
-            <li>🚀 Strength: shipping reliable, observable systems</li>
+            <li>🎯 Current: LLM apps, retrieval pipelines, prompt evaluation</li>
+            <li>🚀 Strength: delivering production-ready, observable ML systems</li>
             <li>🏫 Education: WPI — M.S. Data Science (Dec 2025)</li>
           </ul>
         </div>
       </div>
-        </div>
-        <div class="card fade-up">
-          <ul>
-            <li>🎯 Focus: Data pipelines, fraud detection, churn analytics</li>
-            <li>🚀 Strength: end-to-end systems, from raw data to insights</li>
-            <li>❤️ Philosophy: simple, observable, maintainable</li>
-          </ul>
-        </div>
+      <div class="card fade-up">
+        <ul>
+          <li>🎯 Focus: Architecting reliable ML pipelines for fraud intelligence, churn modeling, and high-impact analytics</li>
+          <li>🚀 Strength: building reliable, production-grade ML systems end-to-end</li>
+          <li>❤️ Philosophy: simple, observable, maintainable engineering</li>
+        </ul>
       </div>
     </section>
 
@@ -696,20 +697,23 @@
     });
 
     // Email link handling
-    document.getElementById('emailLink').addEventListener('click', (e) => {
-      console.log('Email link clicked:', e.target.href);
-      
-      // Show a tooltip or message to help users understand what will happen
-      const originalText = e.target.textContent;
-      e.target.textContent = 'Opening email client...';
-      e.target.style.color = '#6ee7ff';
-      
-      // Reset after a short delay
-      setTimeout(() => {
-        e.target.textContent = originalText;
-        e.target.style.color = '';
-      }, 2000);
-    });
+    const emailLink = document.getElementById('emailLink');
+    if (emailLink) {
+      emailLink.addEventListener('click', (e) => {
+        console.log('Email link clicked:', e.target.href);
+        
+        // Show a tooltip or message to help users understand what will happen
+        const originalText = e.target.textContent;
+        e.target.textContent = 'Opening email client...';
+        e.target.style.color = '#6ee7ff';
+        
+        // Reset after a short delay
+        setTimeout(() => {
+          e.target.textContent = originalText;
+          e.target.style.color = '';
+        }, 2000);
+      });
+    }
   </script>
 </body>
 </html>
