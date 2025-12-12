@@ -559,7 +559,7 @@
       <div>
         <a class="tag" href="https://github.com/nirajmohabey?tab=repositories" target="_blank" rel="noopener">GitHub</a>
         <a class="tag" href="https://www.linkedin.com/in/nirajmohabey/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="tag" href="mailto:nmohabey31@gmail.com?subject=Portfolio%20Contact" id="emailLink">Email</a>
+        <a class="tag" href="mailto:nmohabey31@gmail.com?subject=Portfolio%20Contact" id="emailLink" title="Click to email nmohabey31@gmail.com">Email</a>
       </div>
       <small>© <span id="year"></span> Niraj</small>
     </div>
@@ -692,13 +692,16 @@
       });
     });
 
-    // Email link handling - ensure mailto works properly
+    // Email link handling - open Gmail compose directly (more reliable than mailto)
     const emailLink = document.getElementById('emailLink');
     if (emailLink) {
       emailLink.addEventListener('click', (e) => {
-        // Don't prevent default - let the mailto link work naturally
-        // The mailto: protocol will open the default email client
-        console.log('Email link clicked, opening mail client...');
+        e.preventDefault();
+        const email = 'nmohabey31@gmail.com';
+        const subject = 'Portfolio Contact';
+        // Gmail compose URL - this will always work
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}`;
+        window.open(gmailUrl, '_blank');
       });
     }
   </script>
