@@ -559,7 +559,7 @@
       <div>
         <a class="tag" href="https://github.com/nirajmohabey?tab=repositories" target="_blank" rel="noopener">GitHub</a>
         <a class="tag" href="https://www.linkedin.com/in/nirajmohabey/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="tag" href="mailto:nmohabey31@gmail.com">Email</a>
+        <a class="tag" href="mailto:nmohabey31@gmail.com?subject=Portfolio%20Contact" id="emailLink">Email</a>
       </div>
       <small>© <span id="year"></span> Niraj</small>
     </div>
@@ -692,22 +692,13 @@
       });
     });
 
-    // Email link handling
+    // Email link handling - ensure mailto works properly
     const emailLink = document.getElementById('emailLink');
     if (emailLink) {
       emailLink.addEventListener('click', (e) => {
-        console.log('Email link clicked:', e.target.href);
-        
-        // Show a tooltip or message to help users understand what will happen
-        const originalText = e.target.textContent;
-        e.target.textContent = 'Opening email client...';
-        e.target.style.color = '#6ee7ff';
-        
-        // Reset after a short delay
-        setTimeout(() => {
-          e.target.textContent = originalText;
-          e.target.style.color = '';
-        }, 2000);
+        // Don't prevent default - let the mailto link work naturally
+        // The mailto: protocol will open the default email client
+        console.log('Email link clicked, opening mail client...');
       });
     }
   </script>
